@@ -1,82 +1,82 @@
-# AI Development Agent Guidelines
+# AI开发代理指南
 
-This file contains build/lint/test commands and code style guidelines for agentic coding agents working in this repository.
+此文件包含构建/测试命令和代码风格指南，供在仓库中工作的AI代理使用。
 
-## Project Overview
+## 项目概述
 
-This is a Next.js 16 application with TypeScript, Tailwind CSS v4, and ESLint configuration. The project follows modern React patterns with App Router.
+这是一个Next.js 16应用程序，使用TypeScript、Tailwind CSS v4和ESLint配置。项目遵循现代React模式，使用App Router。
 
-## Build, Lint, and Test Commands
+## 构建、测试和Lint命令
 
-### Development
+### 开发
 ```bash
-# Start development server
+# 启动开发服务器
 npm run dev
 
-# Build for production
+# 构建生产版本
 npm run build
 
-# Start production server
+# 启动生产服务器
 npm run start
 
-# Run linter
+# 运行代码检查器
 npm run lint
 ```
 
-### Testing
-This project currently does not have a testing framework configured. When adding tests:
-- Use Jest or Vitest for unit testing
-- Use React Testing Library for component testing
-- Add test scripts to package.json as needed
+### 测试
+当前项目没有配置测试框架。添加测试时：
+- 使用Jest或Vitest进行单元测试
+- 使用React Testing Library进行组件测试
+- 根据需要将测试脚本添加到package.json
 
-### Code Style Guidelines
+## 代码风格指南
 
-#### TypeScript Configuration
-- Target: ES2017
-- Strict mode enabled
-- Module resolution: bundler
+### TypeScript配置
+- 目标: ES2017
+- 启用严格模式
+- 模块解析: bundler
 - JSX: react-jsx
-- Path alias: @/* maps to ./*
+- 路径别名: @/* 映射到 ./*
 
-#### Import Organization
+### 导入组织
 ```typescript
-// 1. React/Next.js imports
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
+// 1. React/Next.js导入
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
 
-// 2. Third-party libraries
-import { Button } from '@/components/ui/button';
+// 2. 第三方库
+import { Button } from '@/components/ui/button'
 
-// 3. Local imports (use @ alias)
-import { getPosts } from '@/lib/api';
-import { Layout } from '@/components/layout';
+// 3. 本地导入（使用@别名）
+import { getPosts } from '@/lib/api'
+import { Layout } from '@/components/layout'
 ```
 
-#### Component Structure
+### 组件结构
 ```typescript
-// 1. Imports
-import React from 'react';
+// 1. 导入
+import React from 'react'
 
-// 2. Types/Interfaces (if needed)
+// 2. 类型/接口（如果需要）
 interface ComponentProps {
   title: string;
   description?: string;
 }
 
-// 3. Component definition
+// 3. 组件定义
 export default function ComponentName({
   title,
-  description = 'Default description'
+  description = '默认描述'
 }: ComponentProps) {
-  // 4. Hooks (useState, useEffect, etc.)
+  // 4. Hooks（useState, useEffect等）
   const [state, setState] = useState(null);
   
-  // 5. Event handlers
+  // 5. 事件处理函数
   const handleClick = () => {
     setState(!state);
   };
   
-  // 6. Render
+  // 6. 渲染
   return (
     <div className="container">
       <h1>{title}</h1>
@@ -85,111 +85,111 @@ export default function ComponentName({
   );
 }
 
-// 7. Prop types (if not using TypeScript)
+// 7. 属性类型（如果不使用TypeScript）
 ComponentName.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string
 };
 ```
 
-#### Naming Conventions
-- **Components**: PascalCase (e.g., `UserProfile`, `DataTable`)
-- **Functions/Variables**: camelCase (e.g., `getUserData`, `isLoading`)
-- **Constants**: UPPER_SNAKE_CASE (e.g., `API_BASE_URL`, `MAX_RETRY_ATTEMPTS`)
-- **Files**: PascalCase for components (e.g., `UserProfile.tsx`), camelCase for utilities (e.g., `apiClient.ts`)
-- **CSS Classes**: Tailwind utility classes or BEM methodology for custom styles
+### 命名约定
+- **组件**: PascalCase（例如：UserProfile, DataTable）
+- **函数/变量**: camelCase（例如：getUserData, isLoading）
+- **常量**: UPPER_SNAKE_CASE（例如：API_BASE_URL, MAX_RETRY_ATTEMPTS）
+- **文件**: 组件使用PascalCase（例如：UserProfile.tsx），工具使用camelCase（例如：apiClient.ts）
+- **CSS类**: Tailwind工具类或BEM方法用于自定义样式
 
-#### Error Handling
+### 错误处理
 ```typescript
-// Use try-catch for async operations
+// 使用try-catch处理异步操作
 try {
   const data = await fetchUserData();
   setData(data);
 } catch (error) {
-  console.error('Failed to fetch user data:', error);
-  setError('Unable to load user data');
+  console.error('获取数据失败：', error);
+  setError('无法加载用户数据');
 }
 
-// Use proper error boundaries for React components
+// 为React组件使用适当的错误边界
 ```
 
-#### State Management
-- Use React hooks (`useState`, `useEffect`, `useContext`) for local state
-- Consider Context API for global state
-- Avoid direct mutations; use immutable updates
-- Prefer derived state over redundant state
+### 状态管理
+- 使用React钩子（useState, useEffect, useContext）管理本地状态
+- 考虑使用Context API管理全局状态
+- 避免直接突变；使用不可变更新
+- 优先使用派生状态而非冗余状态
 
-#### Styling Guidelines
-- Use Tailwind CSS utility classes
-- Leverage dark mode support (`dark:` prefix)
-- Use CSS variables for theming
-- Follow responsive design patterns (`sm:`, `md:`, `lg:` prefixes)
+### 样式指南
+- 使用Tailwind CSS工具类
+- 利用暗黑模式支持（dark:前缀）
+- 使用CSS变量进行主题化
+- 遵循响应式设计模式（sm:, md:, lg:前缀）
 
-#### File Organization
+### 文件组织
 ```
 src/
-├── components/     # Reusable UI components
-│   ├── ui/         # Basic UI elements
-│   └── features/   # Feature-specific components
-├── lib/           # Utilities and helper functions
-├── types/         # TypeScript type definitions
-├── hooks/         # Custom React hooks
-├── pages/         # Page components (Next.js App Router)
-└── styles/        # Global styles and themes
+├── components/     # 可重用UI组件
+│   ├── ui/         # 基础UI元素
+│   └── features/   # 特性特定组件
+├── lib/           # 工具函数和助手
+├── types/         # TypeScript类型定义
+├── hooks/         # 自定义React钩子
+├── pages/         # 页面组件（Next.js App Router）
+└── styles/        # 全局样式和主题
 ```
 
-#### ESLint Configuration
-- Uses Next.js ESLint configuration
-- Extends core web vitals and TypeScript rules
-- Ignores `.next/`, `out/`, `build/`, and `next-env.d.ts`
+### ESLint配置
+- 使用Next.js ESLint配置
+- 扩展核心Web vitals和TypeScript规则
+- 忽略 .next/、out/、build/ 和 next-env.d.ts
 
-#### TypeScript Best Practices
-- Use explicit return types for functions
-- Prefer interfaces over types for object shapes
-- Use generic types where appropriate
-- Enable strict mode for type safety
+### TypeScript最佳实践
+- 为函数使用显式返回类型
+- 对象形状优先使用接口而非类型
+- 在适当的地方使用泛型类型
+- 启用严格模式确保类型安全
 
-#### Performance Guidelines
-- Use React.memo for expensive components
-- Implement proper loading states
-- Optimize images with Next.js Image component
-- Use dynamic imports for code splitting
+### 性能指南
+- 对昂贵组件使用React.memo
+- 实现适当的加载状态
+- 使用Next.js Image组件优化图片
+- 使用动态导入进行代码分割
 
-#### Security Considerations
-- Use `rel="noopener noreferrer"` for external links
-- Sanitize user inputs
-- Use environment variables for sensitive data
-- Implement proper authentication and authorization
+### 安全注意事项
+- 为外部链接使用 rel="noopener noreferrer"
+- 清理用户输入
+- 对敏感数据使用环境变量
+- 实现适当的身份验证和授权
 
-## Development Workflow
+## 开发工作流
 
-1. Always run `npm run lint` before committing
-2. Use TypeScript for type safety
-3. Follow the established component patterns
-4. Test responsive design across breakpoints
-5. Ensure dark mode compatibility
-6. Use semantic HTML elements
-7. Optimize for Core Web Vitals
+1. 提交前始终运行 `npm run lint`
+2. 使用TypeScript确保类型安全
+3. 遵循已建立的组件模式
+4. 跨断点测试响应式设计
+5. 确保暗黑模式兼容性
+6. 使用语义化HTML元素
+7. 为Core Web Vitals优化
 
-## Common Patterns
+## 常见模式
 
-### API Calls
+### API调用
 ```typescript
 const fetchUsers = async (): Promise<User[]> => {
   try {
     const response = await fetch('/api/users');
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      throw new Error('网络响应失败');
     }
     return await response.json();
   } catch (error) {
-    console.error('Failed to fetch users:', error);
+    console.error('获取用户失败：', error);
     throw error;
   }
 };
 ```
 
-### Form Handling
+### 表单处理
 ```typescript
 const [formData, setFormData] = useState({
   name: '',
@@ -205,7 +205,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 };
 ```
 
-### Loading States
+### 加载状态
 ```typescript
 const [isLoading, setIsLoading] = useState(false);
 const [data, setData] = useState<Data | null>(null);
@@ -221,9 +221,9 @@ const loadData = async () => {
 };
 ```
 
-## Tools and Extensions
+## 工具和扩展
 
-- Use VS Code with TypeScript and ESLint extensions
-- Install Tailwind CSS IntelliSense for better autocomplete
-- Use Prettier for code formatting (if configured)
-- Consider using Next.js DevTools for debugging
+- 使用VS Code配合TypeScript和ESLint扩展
+- 安装Tailwind CSS IntelliSense获得更好的自动补全
+- 使用Prettier进行代码格式化（如果配置）
+- 考虑使用Next.js DevTools进行调试
